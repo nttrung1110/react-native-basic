@@ -1,13 +1,15 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import About from "../screens/about";
 import Home from "../screens/home";
 import ReviewDetail from "../screens/reviewDetail";
 
+const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-export default function Tabs() {
+function Root() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -32,7 +34,19 @@ export default function Tabs() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="About" component={About} />
-      <Tab.Screen name="ReviewDetail" component={ReviewDetail} />
     </Tab.Navigator>
+  );
+}
+
+export default function Navigation() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Root" component={Root} />
+      <Stack.Screen name="ReviewDetail" component={ReviewDetail} />
+    </Stack.Navigator>
   );
 }

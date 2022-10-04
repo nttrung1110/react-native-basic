@@ -4,7 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import Tabs from "./navigation/tabs";
+import Navigation from "./navigation";
 
 import Header from "./layout/header";
 
@@ -33,7 +33,7 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer onReady={onLayoutRootView}>
         <Header />
-        <Tabs />
+        <Navigation />
       </NavigationContainer>
     </SafeAreaProvider>
   );

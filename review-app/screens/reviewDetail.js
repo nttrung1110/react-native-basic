@@ -4,16 +4,16 @@ import Card from "../shared/card";
 import { globalStyles } from "../styles/globalStyles";
 
 export default function ReviewDetail({ navigation, route }) {
-  const data = route.params;
+  const { title, body, rating } = route.params;
 
   return (
     <View style={globalStyles.container}>
       <Card>
-        <Text style={globalStyles.textTitle}>{data?.title}</Text>
-        <Text style={globalStyles.textTitle}>{data?.body}</Text>
+        <Text style={globalStyles.textTitle}>{title}</Text>
+        <Text style={globalStyles.textTitle}>{body}</Text>
         <View style={styles.rating}>
           <Text>GameZone rating: </Text>
-          <Image source={images.ratings[data?.rating]} />
+          <Image source={images.ratings[rating]} />
         </View>
       </Card>
       <View style={{ marginTop: 10 }}>
