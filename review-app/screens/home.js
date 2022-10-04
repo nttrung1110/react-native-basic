@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 
+import Card from "../shared/card";
+
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
     {
@@ -38,7 +40,9 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetail", item)}
           >
-            <Text style={globalStyles.textTitle}>{item.title}</Text>
+            <Card>
+              <Text style={globalStyles.textTitle}>{item.title}</Text>
+            </Card>
           </TouchableOpacity>
         )}
       />

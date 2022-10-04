@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <SafeAreaView>
       <Image
-        style={styles.imgHeader}
+        style={styles.bgImage}
         source={{
           uri: "https://i.pinimg.com/564x/a6/9b/78/a69b78bc44d37a9f9cadffce14267ba8.jpg",
         }}
@@ -17,8 +17,7 @@ const Header = () => {
 export default Header;
 
 const styles = StyleSheet.create({
-  imgHeader: {
-    width: "100%",
+  bgImage: {
     height: 40,
   },
 });
