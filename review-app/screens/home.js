@@ -1,6 +1,11 @@
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 
 export default function Home({ navigation }) {
@@ -26,7 +31,7 @@ export default function Home({ navigation }) {
   ]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={globalStyles.container}>
       <FlatList
         data={reviews}
         renderItem={({ item }) => (
@@ -37,7 +42,7 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         )}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
