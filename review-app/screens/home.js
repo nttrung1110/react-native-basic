@@ -9,6 +9,7 @@ import {
 import { globalStyles } from "../styles/globalStyles";
 
 import Card from "../shared/card";
+import ReviewDetail from "../modals/reviewModal";
 
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
@@ -32,19 +33,31 @@ export default function Home({ navigation }) {
     },
   ]);
 
+  const [review, setReview] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <View style={globalStyles.container}>
       <FlatList
         data={reviews}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("ReviewDetail", item)}
+            onPress={() => {
+              setReview(item);
+              setShowModal(true);
+            }}
           >
             <Card>
               <Text style={globalStyles.textTitle}>{item.title}</Text>
             </Card>
           </TouchableOpacity>
         )}
+      />
+
+      <ReviewDetail
+        data={review}
+        showModal={showModal}
+        setShowModal={setShowModal}
       />
     </View>
   );

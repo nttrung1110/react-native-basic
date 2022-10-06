@@ -1,13 +1,22 @@
 import { Button, Image, StyleSheet, Text, View } from "react-native";
+import Modal from "react-native-modal";
 import { images } from "../assets/images";
 import Card from "../shared/card";
 import { globalStyles } from "../styles/globalStyles";
 
-export default function ReviewDetail({ navigation, route }) {
-  const { title, body, rating } = route.params;
+export default function ReviewDetail({ data, showModal, setShowModal }) {
+  const { title, body, rating } = data;
 
   return (
-    <View style={globalStyles.container}>
+    <Modal
+      style={globalStyles.container}
+      isVisible={showModal}
+      swipeDirection={["up", "down"]}
+      onSwipeComplete={() => setShowModal(false)}
+      onBackButtonPress={() => setShowModal(false)}
+      hideModalContentWhileAnimating={true}
+      useNativeDriverForBackdrop={true}
+    >
       <Card>
         <Text style={globalStyles.textTitle}>{title}</Text>
         <Text style={globalStyles.textTitle}>{body}</Text>
@@ -17,12 +26,9 @@ export default function ReviewDetail({ navigation, route }) {
         </View>
       </Card>
       <View style={{ marginTop: 10 }}>
-        <Button
-          title="Go to Home Screen"
-          onPress={() => navigation.navigate("Home")}
-        />
+        <Button title="Go to Home Screen" onPress={() => setShowModal(false)} />
       </View>
-    </View>
+    </Modal>
   );
 }
 

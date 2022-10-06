@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import About from "../screens/about";
 import Home from "../screens/home";
-import ReviewDetail from "../screens/reviewDetail";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -22,8 +21,6 @@ function Root() {
             iconName = "home";
           } else if (route.name === "About") {
             iconName = "info";
-          } else if (route.name === "ReviewDetail") {
-            iconName = "newspaper-o";
           }
 
           return <FontAwesome name={iconName} size={24} color={color} />;
@@ -46,7 +43,6 @@ export default function Navigation() {
       }}
     >
       <Stack.Screen name="Root" component={Root} />
-      <Stack.Screen name="ReviewDetail" component={ReviewDetail} />
     </Stack.Navigator>
   );
 }
