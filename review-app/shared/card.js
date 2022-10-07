@@ -10,6 +10,7 @@ export default function Card(props) {
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     borderRadius: 6,
     elevation: 3,
     backgroundColor: "#fff",

@@ -6,10 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import { globalStyles } from "../styles/globalStyles";
 
 import Card from "../shared/card";
-import ReviewDetail from "../modals/reviewModal";
+import ReviewDetailModal from "../modals/reviewDetailModal";
+import AddReviewModal from "../modals/addReviewModal";
 
 export default function Home({ navigation }) {
   const [reviews, setReviews] = useState([
@@ -36,8 +39,37 @@ export default function Home({ navigation }) {
   const [review, setReview] = useState({});
   const [showModal, setShowModal] = useState(false);
 
+  const [showAddReviewModal, setShowAddReviewModal] = useState(false);
+
+  const handleAddReview = (data) => {
+    setReviews((prev) => {
+      prev.unshift(data);
+
+      return prev;
+    });
+  };
+
+  const handleDeleteReview = (key) => {
+    setReviews((prev) => prev.filter((item) => item.key !== key));
+  };
+
   return (
     <View style={globalStyles.container}>
+      <View style={styles.moreBtn}>
+        <TouchableOpacity
+          onPress={() => {
+            setShowAddReviewModal(true);
+          }}
+        >
+          <MaterialIcons
+            name="add"
+            size={36}
+            color="white"
+            style={{ backgroundColor: "blue", borderRadius: 9999 }}
+          />
+        </TouchableOpacity>
+      </View>
+
       <FlatList
         data={reviews}
         renderItem={({ item }) => (
@@ -53,14 +85,27 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         )}
       />
+      <AddReviewModal
+        showAddReviewModal={showAddReviewModal}
+        setShowAddReviewModal={setShowAddReviewModal}
+        handleAddReview={handleAddReview}
+      />
 
-      <ReviewDetail
+      <ReviewDetailModal
         data={review}
         showModal={showModal}
         setShowModal={setShowModal}
+        handleDeleteReview={handleDeleteReview}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  moreBtn: {
+    margin: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+});

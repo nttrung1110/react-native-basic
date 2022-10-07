@@ -4,12 +4,17 @@ import { images } from "../assets/images";
 import Card from "../shared/card";
 import { globalStyles } from "../styles/globalStyles";
 
-export default function ReviewDetail({ data, showModal, setShowModal }) {
-  const { title, body, rating } = data;
+export default function ReviewDetailModal({
+  data,
+  showModal,
+  setShowModal,
+  handleDeleteReview,
+}) {
+  const { title, body, rating, key } = data;
 
   return (
     <Modal
-      style={globalStyles.container}
+      style={(globalStyles.container, { margin: 0 })}
       isVisible={showModal}
       swipeDirection={["up", "down"]}
       onSwipeComplete={() => setShowModal(false)}
@@ -25,8 +30,31 @@ export default function ReviewDetail({ data, showModal, setShowModal }) {
           <Image source={images.ratings[rating]} />
         </View>
       </Card>
-      <View style={{ marginTop: 10 }}>
-        <Button title="Go to Home Screen" onPress={() => setShowModal(false)} />
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          paddingVertical: 10,
+          backgroundColor: "#fff",
+        }}
+      >
+        <View>
+          <Button
+            title="Go to Home Screen"
+            onPress={() => setShowModal(false)}
+          />
+        </View>
+        <View>
+          <Button
+            title="Delete"
+            color="red"
+            onPress={() => {
+              handleDeleteReview(key);
+              setShowModal(false);
+            }}
+          />
+        </View>
       </View>
     </Modal>
   );

@@ -7,6 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Navigation from "./navigation";
 
 import Header from "./layout/header";
+import { StatusBar } from "react-native";
 
 // firstly, show splash screen waitting for all assets loaded
 SplashScreen.preventAutoHideAsync();
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer onReady={onLayoutRootView}>
+        <StatusBar backgroundColor="#000" />
         <Header />
         <Navigation />
       </NavigationContainer>
