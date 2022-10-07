@@ -1,18 +1,25 @@
+import { Picker } from "@react-native-picker/picker";
 import { Formik } from "formik";
+import { useState } from "react";
 import {
   Button,
+  Keyboard,
   StyleSheet,
   Text,
   TextInput,
-  View,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from "react-native";
 import Modal from "react-native-modal";
-import { Picker } from "@react-native-picker/picker";
+import * as yup from "yup";
 
 import { globalStyles } from "../styles/globalStyles";
-import { useState } from "react";
+
+const reviewSchema = yup.object().shape({
+  title: yup.string().required().min(10),
+  body: yup.string().required(),
+  rating: yup.number().moreThan(1).lessThan(5).required(),
+});
 
 const AddReviewModal = ({
   showAddReviewModal,
@@ -36,23 +43,36 @@ const AddReviewModal = ({
           <Text style={styles.title}>Add new review</Text>
           <Formik
             initialValues={{ title: "", body: "", rating: 0 }}
+            validationSchema={reviewSchema}
             onSubmit={(values) => {
               handleAddReview(values);
               setShowAddReviewModal(false);
             }}
           >
-            {({ setFieldValue, handleChange, handleSubmit, values }) => (
+            {({
+              setFieldValue,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
               <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
                   <Text style={styles.label}>Title</Text>
                   <View style={styles.input}>
                     <TextInput
                       onChangeText={handleChange("title")}
+                      onBlur={handleBlur("title")}
                       value={values.title}
                       placeholder="Write your title"
                     />
                   </View>
                 </View>
+                <Text style={styles.errorMessage}>
+                  {touched.title && errors.title}
+                </Text>
 
                 <View style={styles.inputContainer}>
                   <Text style={styles.label}>Body</Text>
@@ -61,12 +81,16 @@ const AddReviewModal = ({
                     <TextInput
                       style={{ maxHeight: 110 }}
                       onChangeText={handleChange("body")}
+                      onBlur={handleBlur("body")}
                       value={values.body}
                       placeholder="Write your content"
                       multiline={true}
                     />
                   </View>
                 </View>
+                <Text style={styles.errorMessage}>
+                  {touched.body && errors.body}
+                </Text>
 
                 <View style={styles.inputContainer}>
                   <Text style={styles.label}>Rating</Text>
@@ -82,9 +106,9 @@ const AddReviewModal = ({
                       onValueChange={(value) => setFieldValue("rating", value)}
                       mode="dropdown"
                       onFocus={() => setDisabledHolder(true)}
-                      onBlur={() =>
-                        values.rating === 0 && setDisabledHolder(false)
-                      }
+                      onBlur={() => {
+                        values.rating === 0 && setDisabledHolder(false);
+                      }}
                     >
                       <Picker.Item
                         label="Your rating"
@@ -100,6 +124,9 @@ const AddReviewModal = ({
                     </Picker>
                   </View>
                 </View>
+                <Text style={styles.errorMessage}>
+                  {touched.rating && errors.rating}
+                </Text>
 
                 <View style={styles.submit}>
                   <Button onPress={handleSubmit} title="Submit" />
@@ -147,5 +174,9 @@ const styles = StyleSheet.create({
   },
   submit: {
     marginTop: 20,
+  },
+  errorMessage: {
+    color: "crimson",
+    fontSize: 12,
   },
 });
